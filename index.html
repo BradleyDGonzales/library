@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +8,46 @@
     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
+
 <body>
-    <h1>open your console</h1>
-    <div>
-        <button id="btnAddForm" onclick="makeForm()">New Book</button>
-        <div class="popup" id="popup">
+    <div class="container">
+            <header class="header">
+                <img src="icons/radBooks-logos_black.png" alt="" width="150">
+                <p class="greeting">Welcome back, Shyseus</p>
+            </header>
+        <div class="content">
+            <div class="newbookbutton">
+                <button id="btnAddForm" onclick="makeForm()">+ New Book</button>
+            </div>
+            <div class="popup" id="popup">
 
 
 
+            </div>
+
+            <div id="myBooks">
+                <div class="labels">
+                    <h2 class="labelname">Title</h2>
+                    <h2 class="labelname">Author</h2>
+                    <h2 class="labelname">Page Count</h2>
+                    <h2 class="labelname">Status</h2>
+
+                </div>
+                <div id="card-row">
+
+                    <h2 class="labelvalue" id="titlevalue">The Hunger Games</h2>
+                    <h2 class="labelvalue" id="authornamevalue">Suzanne Collins</h2>
+                    <h2 class="labelvalue" id="pagecountvalue">320</h2>
+                    <h2 class="labelvalue" id="statusvalue">Read</h2>
+
+                    <!-- <h2 class="labelvalue" id="title">The Hunger Games</h2>
+                    <h2 class="labelvalue" id="authorname">Suzanne Collins</h2>
+                    <h2 class="labelvalue" id="pagecount">320</h2>
+                    <h2 class="labelvalue" id="status">Read</h2> -->
+
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -22,4 +55,5 @@
 
     <script src="main.js"></script>
 </body>
+
 </html>
