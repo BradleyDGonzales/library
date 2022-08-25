@@ -84,18 +84,37 @@ h2 {
     margin-left: 4em;
     margin-right: 4em;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr;
     text-align: center;
     color: white;
 }
 .card-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    text-align: center;
+    grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: flex-start;
     margin-left: 4em;
     margin-right: 4em;
 }
 label {
     font-family: coolveticaregular;
     color: white;
+}
+img.labelvalue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 12px;
+    height: 12px;
+    padding-top: 6px;
+    opacity: 30%;
+}
+img:hover {
+    opacity: 100%;
+}
+.labelvalue {
+    display: grid;
+    align-items: center;
+    justify-content: center;
 }
