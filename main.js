@@ -14,14 +14,17 @@ TODO 08/24: added local storage, everything works however status isnt being upda
 */
 
 document.addEventListener(`DOMContentLoaded`, function () {
-  if (localStorage.getItem(`title`) === null || localStorage.getItem(`title`) === "") {
+  //if (localStorage.getItem(`title`) === null || localStorage.getItem(`title`) === "") {
+    if (localStorage.length > 1 && localStorage.getItem(`incrementer`) !== null) {
     for (let i = 0; i <= parseInt(localStorage.getItem(`incrementer`)); i++) {
       incrementer = i;
-      localStorage.setItem(`title${i}`, localStorage.getItem(`title${i}`));
-      localStorage.setItem(`author${i}`, localStorage.getItem(`author${i}`));
-      localStorage.setItem(`pageCount${i}`, localStorage.getItem(`pageCount${i}`));
-      localStorage.setItem(`read${i}`, localStorage.getItem(`read${i}`));
-      addBookToWebpage();
+        if (localStorage.getItem(`title${i}`) !== null && localStorage.getItem(`author${i}`) && localStorage.getItem(`pageCount${i}`) && localStorage.getItem(`read${i}`)) {
+        localStorage.setItem(`title${i}`, localStorage.getItem(`title${i}`));
+        localStorage.setItem(`author${i}`, localStorage.getItem(`author${i}`));
+        localStorage.setItem(`pageCount${i}`, localStorage.getItem(`pageCount${i}`));
+        localStorage.setItem(`read${i}`, localStorage.getItem(`read${i}`));
+        addBookToWebpage();
+      }
     }
   }
 }, false);
@@ -210,6 +213,18 @@ function makeForm() {
   });
 
 }
+function removeBook(element) {
+  let idName = element.getAttribute(`id`);
+  let idNumber = idName.slice(-1);
+  console.log(`id number: `, idNumber);
+  console.log(`id name:`, idName);
+  element.parentElement.remove();
+  localStorage.removeItem(`title${idNumber}`)
+  localStorage.removeItem(`author${idNumber}`)
+  localStorage.removeItem(`pageCount${idNumber}`)
+  localStorage.removeItem(`read${idNumber}`)
+  incrementer--;
+}
 function closeForm() {
   if ((title === `` || title === undefined) || (author === `` || author === undefined) || (pageCount === `` || pageCount === undefined) || (read === `` || read === undefined)) {
     return;
@@ -238,6 +253,11 @@ function addBookToWebpage() {
   //localStorage.setItem(`pageCount`,userBook.pageCount);
   //localStorage.setItem(`read`, userBook.read);
 
+  const newRemoveIcon = document.createElement(`img`);
+  newRemoveIcon.setAttribute(`src`,`icons/remove.png`);
+  newRemoveIcon.classList.add(`labelvalue`);
+  newRemoveIcon.setAttribute(`id`,`remove${incrementer}`)
+  newRemoveIcon.setAttribute(`onclick`,`removeBook(this)`);
   const newH2TitleElement = document.createElement(`h2`);
   newH2TitleElement.classList.add(`labelvalue`);
   newH2TitleElement.setAttribute(`id`, `titlevalue${incrementer}`)
@@ -260,6 +280,7 @@ function addBookToWebpage() {
 
 
   // const cardRow = document.getElementById(`card-row`)
+  newCardRowElement.appendChild(newRemoveIcon)
   newCardRowElement.appendChild(newH2TitleElement)
   newCardRowElement.appendChild(newH2AuthorElement)
   newCardRowElement.appendChild(newH2PageCountElement)
