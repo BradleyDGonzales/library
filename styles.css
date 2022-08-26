@@ -38,7 +38,8 @@ img {
     height: fit-content;
 }
 .newbookbutton {
-    padding-top: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
     text-align: center;
 }
 #btnAddForm {
@@ -49,6 +50,11 @@ img {
     font-family: coolveticaregular;
     cursor: pointer;
     font-size: 2em;
+    padding: 8px;
+    background-color: #7f1d1d;
+    border: 2px solid #7f1d1d;
+    border-radius: 16px;
+    color: white;
 }
 form {
     display: grid;
@@ -117,4 +123,10 @@ img:hover {
     display: grid;
     align-items: center;
     justify-content: center;
+}
+.statusButton {
+    font-family: coolveticaregular;
+    background-color: #d4d4d4;
+    font-size: 18px;
+    border: none;
 }
