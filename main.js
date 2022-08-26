@@ -1,24 +1,8 @@
-/*
-
-TODO: Figured out how to push objects into an array, so at this point just need to do the DOM manipulation along with a simple webpage to show the results
-
-TODO 08/22: gathered input from data, DOM manipulation working, made a small popup form (nothing special), as of rn just need to
-actually display the form data onto the webpage as well as making everything required (check for `` or null or undefined values in input(?));
-
-
-TODO 08/23: added a more pleasing looking webpage, figured out how to append child to last value of card-row div but still need to actually display the new book onto the webpage. also still
-need to toggle read status
-
-
-TODO 08/24: added local storage, everything works however status isnt being updated (if someone were to update it then the update wouldnt display upon refreshing). need to implement remove feature.
-*/
-
 document.addEventListener(`DOMContentLoaded`, function () {
-  //if (localStorage.getItem(`title`) === null || localStorage.getItem(`title`) === "") {
-    if (localStorage.length > 1 && localStorage.getItem(`incrementer`) !== null) {
+  if (localStorage.length > 1 && localStorage.getItem(`incrementer`) !== null) {
     for (let i = 0; i <= parseInt(localStorage.getItem(`incrementer`)); i++) {
       incrementer = i;
-        if (localStorage.getItem(`title${i}`) !== null && localStorage.getItem(`author${i}`) && localStorage.getItem(`pageCount${i}`) && localStorage.getItem(`read${i}`)) {
+      if (localStorage.getItem(`title${i}`) !== null && localStorage.getItem(`author${i}`) && localStorage.getItem(`pageCount${i}`) && localStorage.getItem(`read${i}`)) {
         localStorage.setItem(`title${i}`, localStorage.getItem(`title${i}`));
         localStorage.setItem(`author${i}`, localStorage.getItem(`author${i}`));
         localStorage.setItem(`pageCount${i}`, localStorage.getItem(`pageCount${i}`));
@@ -47,20 +31,18 @@ let read;
 
 
 
-function changeStatus() {
-  let statusButtons = document.querySelectorAll(`.statusButton`);
-  statusButtons.forEach(btn => {
-    btn.addEventListener(`click`, function (e) {
-      if (btn.innerText === `Read`) {
-        btn.innerText = `Not yet read`;
-        return;
-      }
-      else {
-        btn.innerText = `Read`;
-        return;
-      }
-    })
-  })
+function changeStatus(element) {
+  let btnIdName = element.getAttribute(`id`);
+  let btnIdNumber = btnIdName.slice(-1);
+
+  if (document.getElementById(`statusbutton${btnIdNumber}`).innerText === `Read`) {
+    document.getElementById(`statusbutton${btnIdNumber}`).innerText = `Not yet read`;
+    localStorage.setItem(`read${btnIdNumber}`, `Not yet read`);
+  }
+  else if (document.getElementById(`statusbutton${btnIdNumber}`).innerText === `Not yet read`) {
+    document.getElementById(`statusbutton${btnIdNumber}`).innerText = `Read`;
+    localStorage.setItem(`read${btnIdNumber}`, `Read`);
+  }
 }
 function Book(title, author, pageCount, read) {
   this.title = title;
@@ -70,7 +52,6 @@ function Book(title, author, pageCount, read) {
 }
 
 
-//function that makes new object and pushes it to myLibrary[]
 function addBookToLibrary(title, author, pageCount, read) {
   localStorage.setItem(`incrementer`, incrementer);
   myLibrary.push({
@@ -89,7 +70,6 @@ function addBookToLibrary(title, author, pageCount, read) {
 
 
 }
-//dynamic form
 function makeForm() {
   popup.classList.add(`open-popup`);
   clickCount++;
@@ -156,8 +136,6 @@ function makeForm() {
   newForm.appendChild(labelReadBook);
   newForm.appendChild(readBook);
   newForm.appendChild(submitButton);
-
-  //document.getElementsByTagName("div")[0].style.display = `block`
   if (typeof document.forms[0] !== `undefined`) return;
   document.getElementById(`popup`).appendChild(newForm);
 
@@ -201,7 +179,6 @@ function makeForm() {
     userBook = new Book(title, author, pageCount, read)
     addBookToLibrary(title, author, pageCount, read);
 
-    console.table(userBook);
 
     clickCount = 0;
     document.getElementById("bookForm").reset();
@@ -216,8 +193,6 @@ function makeForm() {
 function removeBook(element) {
   let idName = element.getAttribute(`id`);
   let idNumber = idName.slice(-1);
-  console.log(`id number: `, idNumber);
-  console.log(`id name:`, idName);
   element.parentElement.remove();
   localStorage.removeItem(`title${idNumber}`)
   localStorage.removeItem(`author${idNumber}`)
@@ -248,16 +223,11 @@ function addBookToWebpage() {
 
   labelsElement.after(newCardRowElement);
 
-  //localStorage.setItem(`title`, userBook.title);
-  //localStorage.setItem(`author`,userBook.author);
-  //localStorage.setItem(`pageCount`,userBook.pageCount);
-  //localStorage.setItem(`read`, userBook.read);
-
   const newRemoveIcon = document.createElement(`img`);
-  newRemoveIcon.setAttribute(`src`,`icons/remove.png`);
+  newRemoveIcon.setAttribute(`src`, `icons/remove.png`);
   newRemoveIcon.classList.add(`labelvalue`);
-  newRemoveIcon.setAttribute(`id`,`remove${incrementer}`)
-  newRemoveIcon.setAttribute(`onclick`,`removeBook(this)`);
+  newRemoveIcon.setAttribute(`id`, `remove${incrementer}`)
+  newRemoveIcon.setAttribute(`onclick`, `removeBook(this)`);
   const newH2TitleElement = document.createElement(`h2`);
   newH2TitleElement.classList.add(`labelvalue`);
   newH2TitleElement.setAttribute(`id`, `titlevalue${incrementer}`)
@@ -275,11 +245,11 @@ function addBookToWebpage() {
 
   const newButtonStatusElement = document.createElement(`button`);
   newButtonStatusElement.classList.add(`statusButton`);
-  newButtonStatusElement.setAttribute(`onclick`, `changeStatus()`)
+  newButtonStatusElement.setAttribute(`id`, `statusbutton${incrementer}`)
+  newButtonStatusElement.setAttribute(`onclick`, `changeStatus(this)`)
   newButtonStatusElement.innerText = localStorage.getItem(`read${incrementer}`)
 
 
-  // const cardRow = document.getElementById(`card-row`)
   newCardRowElement.appendChild(newRemoveIcon)
   newCardRowElement.appendChild(newH2TitleElement)
   newCardRowElement.appendChild(newH2AuthorElement)
@@ -288,8 +258,6 @@ function addBookToWebpage() {
 
   incrementer++;
 
-  //const lastElement = document.getElementById(`titlevalue`);
-  //lastElement.innerText = `Testing this`
 
 }
 //loops through myLibrary[]
@@ -300,7 +268,4 @@ function looper(array) {
     pageCount = array[i].pageCount;
     read = array[i].read;
   }
-  console.log(array);
 }
-//changeStatus();
-//looper(myLibrary);
