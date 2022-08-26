@@ -1,1 +1,2 @@
 # library
+radBooks is a simple to use library to store books that you plan on reading or store books you have finished reading! You can change the status of a book by clicking on the text which says "Read" or "Not yet read". radBooks uses localStorage to keep your books safe even after you close the tab or exit out of your browser. This was my first implementation of localStorage as well as first actual practice of a simple UI and design. 
